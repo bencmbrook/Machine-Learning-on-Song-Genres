@@ -1,8 +1,6 @@
 from pyechonest import config
 config.ECHO_NEST_API_KEY="SRCGPBCAPG5FQQKFR"
 
-import json
-
 from pyechonest import artist
 bk = artist.Artist('bikini kill')
 print "Artists similar to: %s:" % (bk.name,)
