@@ -2,7 +2,7 @@ import pyen
 import os
 import csv
 
-SONGS_PER_GENRE = 3
+SONGS_PER_GENRE = 3 # Up to 100 songs per genre. 100 songs per genre takes about 30 seconds so let it load.
 
 os.environ["ECHO_NEST_API_KEY"] = "SRCGPBCAPG5FQQKFR"
 
