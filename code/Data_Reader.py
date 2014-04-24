@@ -1,7 +1,8 @@
 import pyen
 import os
-
 import csv
+
+SONGS_PER_GENRE = 3
 
 os.environ["ECHO_NEST_API_KEY"] = "SRCGPBCAPG5FQQKFR"
 
@@ -38,7 +39,7 @@ genres = ['blues', 'classical', 'electronic', 'hip hop', 'jazz', 'reggae', 'rock
 def get_songs():
 	songs = []
 	for genre in genres:
-		songs_of_genre = EchoNest.get('song/search', style=genre, bucket=['audio_summary'], results=3)
+		songs_of_genre = EchoNest.get('song/search', style=genre, bucket=['audio_summary'], results=SONGS_PER_GENRE)
 		for song in songs_of_genre['songs']:
 			song_data = song['audio_summary']
 			# Pop off unnecessary dictionary values
