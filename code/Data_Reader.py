@@ -27,13 +27,18 @@ def normalize(song_data):
 		song_data['loudness'] = 5.
 	elif song_data['loudness'] < -30.:
 		song_data['loudness'] = -30.
+	# Normalize tempo
+	if song_data['tempo'] > 200.:
+		song_data['tempo'] = 200.
+	elif song_data['tempo'] < 0.:
+		song_data['tempo'] = 0.
 
 genres = ['blues', 'classical', 'electronic', 'hip hop', 'jazz', 'reggae', 'rock']
 
 def get_songs():
 	songs = []
 	for genre in genres:
-		songs_of_genre = EchoNest.get('song/search', style=genre, bucket=['audio_summary'], results=100)
+		songs_of_genre = EchoNest.get('song/search', style=genre, bucket=['audio_summary'], results=3)
 		for song in songs_of_genre['songs']:
 			song_data = song['audio_summary']
 			# Pop off unnecessary dictionary values
@@ -42,5 +47,7 @@ def get_songs():
 			normalize(song_data)
 			songs.append((genre, song_data))
 	return songs
+
+print get_songs()
 
 
