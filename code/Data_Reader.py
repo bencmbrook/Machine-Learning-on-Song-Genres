@@ -35,19 +35,57 @@ def normalize(song_data):
 
 genres = ['blues', 'classical', 'electronic', 'hip hop', 'jazz', 'reggae', 'rock']
 
+
+class Song
+    def __init__(self, genre, data):
+        self.data = data
+        self.genre = genre
+        
+    def GetTruth(self):
+        truth = []
+        
+        # convert the genre information into a vector of 0's, with a 1 in the position of the actual genre of the song
+        for i, genre in enumerate(genres)
+            if genre = self.genre
+                truth[i] = 1
+            else truth[i] = 0
+        
+        # return the vector.
+        return truth
+    
+    def GetData(self):
+        return self.data
+    
 def get_songs():
-	songs = []
+	Songs = []
+    
+    # iterate through the selected genres
 	for genre in genres:
-		songs_of_genre = EchoNest.get('song/search', style=genre, bucket=['audio_summary'], results=SONGS_PER_GENRE)
-		for song in songs_of_genre['songs']:
-			song_data = song['audio_summary']
+		tunes_of_genre = EchoNest.get('song/search', style=genre, bucket=['audio_summary'], results=SONGS_PER_GENRE)
+        
+        # iterate through each "tune" of the current genre
+		for tune in tunes_of_genre['songs']:
+			tune_data = tune['audio_summary']
+            
 			# Pop off unnecessary dictionary values
 			for useless in ['analysis_url', 'audio_md5', 'key']: 
-	  			song_data.pop(useless)
-			normalize(song_data)
-			songs.append((genre, song_data))
+	  			tune_data.pop(useless)
+                
+            # normalize song_data
+			normalize(tune_data)
+            
+            # construct the new songs from the ingredients we have
+            new_song = Song.__init__(genre, song_data)
+            
+            # append it to our song list
+			songs.append(new_song)
+            
 	return songs
 
 print get_songs()
+
+            
+        
+        
 
 
