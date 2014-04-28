@@ -32,11 +32,12 @@ class Network:
                 maxIterations -= 1
     
     # adds an edge`
-    def AddEdge(self, origin, terminal)
+    def AddEdge(self, origin, terminal):
         Edge.__init__(origin, terminal)
         
     # adds nodes. layer corresponds to the type of node: 1 for input, 2 for hidden and 3 for output  
-    def AddNode(self, layer, index)
+    def AddNode(self, layer, index):
+        
         # adding an input node
         if layer = 1
             Input_Node.__init__(index)
