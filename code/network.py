@@ -19,7 +19,7 @@ class Network:
             node.EvalError(truth)
             
     def UpdateWeights(self, learnRate):
-        for node in self.inputNodes
+        for node in self.inputNodes:
             node.Learn(learnRate)
             
     def Train(self, trainSet, learnRate, maxIterations):
@@ -38,11 +38,11 @@ class Network:
     def AddNode(self, layer, index):
         
         # adding an input node
-        if layer = 1
+        if layer == 1:
             Input_Node.__init__(index)
         
         # adding a hidden node, with edges to all input and output nodes
-        if layer = 2
+        if layer == 2:
             Node.__init__()
             for inn in inputNodes:
                 Edge.__init__(inn, self)
@@ -50,5 +50,5 @@ class Network:
                 Edge.__init__(self, outn)
         
         # adding an output node
-        if layer = 3
+        if layer == 3:
             Output_Node.__init__(index)
