@@ -67,7 +67,6 @@ def get_songs():
     for genre in genres:
         tunes_of_genre = EchoNest.get('song/search', style=genre, bucket=['audio_summary'], results=SONGS_PER_GENRE)
         
-        print tunes_of_genre['songs']
         # iterate through each "tune" of the current genre
         for tune in tunes_of_genre['songs']:
             tune_data = tune['audio_summary']
@@ -85,8 +84,4 @@ def get_songs():
             # append it to our song list
             songs.append(new_song)
 
-            print genre, tune
-
     return songs
-
-print len(get_songs())
