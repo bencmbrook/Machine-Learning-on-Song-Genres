@@ -3,14 +3,14 @@ class Node:
         self.EdgesIn = []
         self.EdgesOut = []
         self.LastOutputs = []
-        self.Error = 0.0
+        self.Error = None
          
     def Evaluate(self, input):
         sum = 0
         
         # store the outputs of each edge in an array
         for i, e in enumerate(self.EdgesIn):
-            self.LastInput[i] = (e.in.Evaluate(input) * e.weight)
+            self.LastInput[i] = (e.inp.Evaluate(input) * e.weight)
         
         # sum the elements of the input array
         output = sum(self.LastInput)
@@ -19,21 +19,21 @@ class Node:
         self.LastOutputs.append(output)    
         return sum
 
-    def evaluate(self, inputVector):
-        self.lastInput = []
-        weightedSum = 0
- 
-        for e in self.incomingEdges:
-            theInput = e.source.evaluate(inputVector)
-            self.lastInput.append(theInput)
-            weightedSum += e.weight * theInput
- 
-        self.lastOutput = activationFunction(weightedSum)
-        return self.lastOutput
+#    def evaluate(self, inputVector):
+#        self.lastInput = []
+#        weightedSum = 0
+# 
+#        for e in self.incomingEdges:
+#            theInput = e.source.evaluate(inputVector)
+#            self.lastInput.append(theInput)
+#            weightedSum += e.weight * theInput
+# 
+#        self.lastOutput = activationFunction(weightedSum)
+#        return self.lastOutput
     
     def EvalError(self, truth):
         # if for some reason we haven't learned from our last error
-        if self.Error != None
+        if self.Error is not None:
             return self.Error
         
         # if current node is an output node calculate error and return it
@@ -42,16 +42,16 @@ class Node:
             # return self.Error
         
         # else sum errors of output edges and eventually return error
-        else
+        else:
             for e in self.EdgesOut:
                 self.Error += (e.weight * e.out.EvalError(truth))
                 
             return self.Error
         
     def Learn(self, LearnRate):
-        if not_(self.LastOutputs = [] or self.Error = None or self.LastInput = None)
+        if not(self.LastOutputs == [] or self.Error == None or self.LastInput == None):
             for i, e in enumerate(self.EdgesIn):
-                e.weight += (LearnRate * self.LastOutputs[0] * (1 - self.LastOutputs[0]) * self.Error * self.LastInput[i]            
+                e.weight += (LearnRate * self.LastOutputs[0] * (1 - self.LastOutputs[0]) * self.Error * self.LastInput[i])            
         
 class Output_Node(Node):
     def __init__(self, index):
@@ -79,16 +79,16 @@ class Input_Node(Node):
         return output
 
 class Edge:
-    def __init__(self, in, out):
+    def __init__(self, inp, out):
         self.weight = random.uniform(0,1)
-        self.in = in
+        self.inp = inp
         self.out = out
         
         # add self to input and output nodes
-        in.EdgesOut.append(self)
+        inp.EdgesOut.append(self)
         out.EdgesIn.append(self)
 
-class BiasNode(InputNode):
+class BiasNode(Input_Node):
     def __init__(self):
         Node.__init__(self)
  
@@ -109,7 +109,7 @@ class NeuralNetwork:
  
     def updateWeights(self, learningRate):
         for node in self.inputNodes:
-        node.updateWeights(learningRate)
+            node.updateWeights(learningRate)
  
     def train(self, labeledExamples, learningRate=0.9, maxIterations=10000):
         while maxIterations > 0:
