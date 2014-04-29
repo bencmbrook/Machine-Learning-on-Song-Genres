@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-class Network:
-   def __init__(self):
-      self.inputNodes = []
-      self.outputNodes = []
-=======
 # file containing the definition of network using classes in node_edge.py
 from node_edge import *
 from Data_Reader import *
@@ -59,8 +53,3 @@ class Network:
         # adding an output node
         if layer = 3
             Output_Node.__init__(index)
-        
-        
-            
-    
->>>>>>> FETCH_HEAD
