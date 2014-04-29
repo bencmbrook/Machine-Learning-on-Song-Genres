@@ -11,11 +11,11 @@ class Network:
     def Evaluate(self, input):
         output = []
         
-        for node in self.outputNodes
+        for node in self.outputNodes:
             output[node.index] = node.Evaluate(input)
             
     def PropagateError(self, truth):
-        for node in self.inputNodes
+        for node in self.inputNodes:
             node.EvalError(truth)
             
     def UpdateWeights(self, learnRate):
