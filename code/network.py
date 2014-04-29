@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-class Network:
-   def __init__(self):
-      self.inputNodes = []
-      self.outputNodes = []
-=======
 # file containing the definition of network using classes in node_edge.py
 from node_edge import *
 from Data_Reader import *
@@ -34,10 +28,9 @@ class Network:
                 output = self.Evaluate(ex.getData)
                 self.PropagateError(ex.getTruth)
                 self.UpdateWeights(learnRate)
-                
                 maxIterations -= 1
     
-    # adds an edge`
+    # adds an edge
     def AddEdge(self, origin, terminal):
         Edge.__init__(origin, terminal)
         
@@ -48,7 +41,7 @@ class Network:
         if layer = 1
             Input_Node.__init__(index)
         
-        #adding a hidden node, with edges to all input and output nodes
+        # adding a hidden node, with edges to all input and output nodes
         if layer = 2
             Node.__init__()
             for inn in inputNodes:
@@ -59,8 +52,3 @@ class Network:
         # adding an output node
         if layer = 3
             Output_Node.__init__(index)
-        
-        
-            
-    
->>>>>>> FETCH_HEAD
