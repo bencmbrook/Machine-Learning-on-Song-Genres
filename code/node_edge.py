@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+# file containing the ingredients for the network class in network.py:
+#   - Node
+#   - Edge
+#   - Input_Node and Output_Node subclasses 
+
+>>>>>>> FETCH_HEAD
 class Node:
     def __init__(self):
         self.EdgesIn = []
@@ -8,6 +16,14 @@ class Node:
          
     def Evaluate(self, input):
         sum = 0
+        
+<<<<<<< HEAD
+        #sum the outputs of each incoming edge
+        for e in self.EdgesIn
+            sum += sum + (e.in.Evaluate(input) * e.weight)
+         
+        self.LastOutputs.append(sum)    
+=======
         # store the outputs of each edge in an array
         for i, e in enumerate(self.EdgesIn):
             self.LastInput[i] = (e.in.Evaluate(input) * e.weight)
@@ -17,7 +33,7 @@ class Node:
         
         # store the value to be outputted in the output array
         self.LastOutputs.append(output)    
-
+>>>>>>> FETCH_HEAD
         return sum
 
     def evaluate(self, inputVector):
@@ -31,7 +47,11 @@ class Node:
  
       self.lastOutput = activationFunction(weightedSum)
       return self.lastOutput
+    
+<<<<<<< HEAD
 
+       
+=======
     def EvalError(self, truth):
         
         # if for some reason we haven't learned from our last error
@@ -55,6 +75,8 @@ class Node:
             for i, e in enumerate(self.EdgesIn):
                 e.weight += (LearnRate * self.LastOutputs[0] * (1 - self.LastOutputs[0]) *
                              self.Error * self.LastInput[i]
+>>>>>>> FETCH_HEAD
+            
         
 class Output_Node(Node):
     def __init__(self, index)
@@ -67,13 +89,25 @@ class Output_Node(Node):
         self.Error = truth[self.index] - self.LastOutputs[0]
         return self.Error
         
+        
 class Input_Node(Node): 
     def __init__(self, index):
         Node.__init__(self)
         
         # add index of the input to be assigned to this node
         self.index = index; 
+<<<<<<< HEAD
 
+   
+    def evaluate(self, inputVector):
+      self.lastOutput = inputVector[self.index]
+      return self.lastOutput
+
+
+class Edge
+    def __init__(self, in, out):
+=======
+        
     def Evaluate(self, input):
         # should just return the correct value identified by index from the input
         output = input[self.index]
@@ -82,6 +116,7 @@ class Input_Node(Node):
 
 class Edge:
     def __init__(self, in, out)
+>>>>>>> FETCH_HEAD
         self.weight = random.uniform(0,1)
         self.in = in
         self.out = out
