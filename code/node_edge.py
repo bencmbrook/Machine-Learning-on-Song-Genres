@@ -3,7 +3,7 @@
 #   - Edge
 #   - Input_Node and Output_Node subclasses 
 
-class Node
+class Node:
     def __init__(self):
         self.EdgesIn = []
         self.EdgesOut = []
@@ -76,7 +76,7 @@ class Input_Node(Node):
         self.LastOutputs.append(output)
         return output
 
-class Edge
+class Edge:
     def __init__(self, in, out)
         self.weight = random.uniform(0,1)
         self.in = in
