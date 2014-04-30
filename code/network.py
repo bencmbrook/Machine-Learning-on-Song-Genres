@@ -1,6 +1,13 @@
 # file containing the definition of network using classes in node_edge.py
 from node_edge import *
-from Data_Reader import *
+
+def getData(tup):
+    (genre, data) = tup
+    return data
+
+def getTruth(tup):
+    (genre, data) = tup
+    return data
 
 class Network:
     def __init__(self):
@@ -10,7 +17,6 @@ class Network:
         
     def Evaluate(self, input):
         output = []
-        
         for node in self.outputNodes:
             output[node.index] = node.Evaluate(input)
             
@@ -25,8 +31,8 @@ class Network:
     def Train(self, trainSet, learnRate, maxIterations):
         while maxIterations > 0:
             for ex in trainSet:
-                output = self.Evaluate(ex.getData)
-                self.PropagateError(ex.getTruth)
+                output = self.Evaluate(getData(ex))
+                self.PropagateError(getTruth(ex))
                 self.UpdateWeights(learnRate)
                 maxIterations -= 1
     

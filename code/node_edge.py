@@ -1,3 +1,5 @@
+import random
+
 class Node:
     def __init__(self):
         self.EdgesIn = []
@@ -7,10 +9,11 @@ class Node:
          
     def Evaluate(self, input):
         sum = 0
-        
+        print "test"
         # store the outputs of each edge in an array
         for i, e in enumerate(self.EdgesIn):
             self.LastInput[i] = (e.inp.Evaluate(input) * e.weight)
+            print i, e
         
         # sum the elements of the input array
         output = sum(self.LastInput)
@@ -33,7 +36,7 @@ class Node:
     
     def EvalError(self, truth):
         # if for some reason we haven't learned from our last error
-        if self.Error is not None:
+        if self.Error is None:
             return self.Error
         
         # if current node is an output node calculate error and return it
@@ -55,7 +58,7 @@ class Node:
         
 class Output_Node(Node):
     def __init__(self, index):
-        Node.__init__(self, index)
+        Node()
         
         # add index of the output of this node for the creation of the single output vector
         self.index = index
@@ -67,7 +70,7 @@ class Output_Node(Node):
         
 class Input_Node(Node): 
     def __init__(self, index):
-        Node.__init__(self)
+        Node()
         
         # add index of the input to be assigned to this node
         self.index = index; 

@@ -45,7 +45,7 @@ class Song:
         self.data = data
         self.genre = genre
         
-    def GetTruth(self):
+    def getTruth(self):
         truth = []
         
         # convert the genre information into a vector of 0's, with a 1 in the position of the actual genre of the song
@@ -57,7 +57,7 @@ class Song:
         # return the vector.
         return truth
     
-    def GetData(self):
+    def getData(self):
         return self.data
     
 def get_songs():
