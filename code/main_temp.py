@@ -4,7 +4,7 @@ import node_edge
 def binaryNumbersTest():
     n_network = network.Network()
     inputNodes = [node_edge.Input_Node(i) for i in range(3)]
-    hiddenNodes = [node_edge.Node() for i in range(3)]
+    hiddenNodes = [node_edge.Node() for i in range(5)]
     outputNode = node_edge.Node()
 
     # weights are all randomized
@@ -26,7 +26,7 @@ def binaryNumbersTest():
                       ((1,0,1), 0),
                       ((1,1,0), 1),
                       ((1,1,1), 0)]
-    n_network.Train(labeledExamples, 0.25, maxIterations=5000)
+    n_network.Train(labeledExamples, 0.1, maxIterations=10000)
 
     print n_network.Evaluate ((0,0,0))
     # test for consistency

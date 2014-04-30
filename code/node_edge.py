@@ -11,19 +11,19 @@ class Node:
         self.LastInput = None
         self.LastOutputs = None
         self.Error = None
-       # self.addBias()
+        self.addBias()
 
-    #def addBias(self):
-     #   self.EdgesIn.append(Edge(BiasNode(),self))
+    def addBias(self):
+        self.EdgesIn.append(Edge(BiasNode(),self))
 
     def Evaluate(self, input):
         if self.LastOutputs is not None:
             return self.LastOutputs
         self.LastInput = []
         weightsum = 0
-        print "test"
+        
         # store the outputs of each edge in an array
-        for i, e in enumerate(self.EdgesIn):
+        for e in (self.EdgesIn):
             firstInput = e.inp.Evaluate(input) 
             self.LastInput.append(firstInput)
             weightsum += firstInput * e.weight
@@ -55,13 +55,18 @@ class Node:
         # else if self.EdgesOut == []
             # self.Error = truth - self.LastOutputs[0]
             # return self.Error
-        
+        assert self.lastOutput is not None
         # else sum errors of output edges and eventually return error
+        if self.EdgesOut == []:
+            self.Error = truth -self.lastOutput
+            
         else:
-            for e in self.EdgesOut:
-                self.Error += (e.weight * e.out.EvalError(truth))
+            self.Error = sum([edge.weight*edge.out.EvalError(truth) for edge in self.outgoingEdges])
+
+            #for e in self.EdgesOut:
+            #    self.Error += (e.weight * e.out.EvalError(truth))
                 
-            return self.Error
+        return self.Error
         
     def Learn(self, LearnRate):
         if self.LastOutputs is not None and self.Error is  not None and self.LastInput is not None:
@@ -94,6 +99,9 @@ class Input_Node(Node):
         self.LastOutput = inputvector[self.index]        
         return self.LastOutput
 
+    def addBias(self): 
+        pass
+
 class Edge:
     def __init__(self, inp, out):
         self.weight = random.uniform(0,1)
@@ -108,7 +116,7 @@ class BiasNode(Input_Node):
     def __init__(self):
         Node.__init__(self)
  
-    def evaluate(self, inputVector):
+    def Evaluate(self, inputVector):
         return 1.0
 
 class NeuralNetwork:
