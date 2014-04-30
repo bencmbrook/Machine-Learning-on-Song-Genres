@@ -1,26 +1,38 @@
 import random
+import math
+
+def activationFunction(x):
+   return 1.0 / (1.0 + math.exp(-x))
 
 class Node:
     def __init__(self):
         self.EdgesIn = []
         self.EdgesOut = []
-        self.LastOutputs = []
+        self.LastInput = None
+        self.LastOutputs = None
         self.Error = None
-         
+       # self.addBias()
+
+    #def addBias(self):
+     #   self.EdgesIn.append(Edge(BiasNode(),self))
+
     def Evaluate(self, input):
-        sum = 0
+        if self.LastOutputs is not None:
+            return self.LastOutputs
+        self.LastInput = []
+        weightsum = 0
         print "test"
         # store the outputs of each edge in an array
         for i, e in enumerate(self.EdgesIn):
-            self.LastInput[i] = (e.inp.Evaluate(input) * e.weight)
-            print i, e
+            firstInput = e.inp.Evaluate(input) 
+            self.LastInput.append(firstInput)
+            weightsum += firstInput * e.weight
+           # print i, e
         
         # sum the elements of the input array
-        output = sum(self.LastInput)
-        
+        self.lastOutput = activationFunction(weightsum)
         # store the value to be outputted in the output array
-        self.LastOutputs.append(output)    
-        return sum
+        return self.lastOutput
 
 #    def evaluate(self, inputVector):
 #        self.lastInput = []
@@ -52,34 +64,35 @@ class Node:
             return self.Error
         
     def Learn(self, LearnRate):
-        if not(self.LastOutputs == [] or self.Error == None or self.LastInput == None):
+        if self.LastOutputs is not None and self.Error is  not None and self.LastInput is not None:
             for i, e in enumerate(self.EdgesIn):
-                e.weight += (LearnRate * self.LastOutputs[0] * (1 - self.LastOutputs[0]) * self.Error * self.LastInput[i])            
+                e.weight += (LearnRate * self.LastOutputs * (1 - self.LastOutputs) * self.Error * self.LastInput[i]) 
+            for edge in self.EdgesOut:
+                edge.out.Learn(LearnRate)           
         
 class Output_Node(Node):
     def __init__(self, index):
-        Node()
+        Node.__init__(self)
         
         # add index of the output of this node for the creation of the single output vector
         self.index = index
         
     def EvalError(self, truth):
-        self.Error = truth[self.index] - self.LastOutputs[0]
+        self.Error = truth[self.index] - self.LastOutputs
         return self.Error
         
         
 class Input_Node(Node): 
     def __init__(self, index):
-        Node()
+        Node.__init__(self)
         
         # add index of the input to be assigned to this node
         self.index = index; 
         
-    def Evaluate(self, input):
+    def Evaluate(self, inputvector):
         # should just return the correct value identified by index from the input
-        output = input[self.index]
-        self.LastOutputs.append(output)
-        return output
+        self.LastOutput = inputvector[self.index]        
+        return self.LastOutput
 
 class Edge:
     def __init__(self, inp, out):

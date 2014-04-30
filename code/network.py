@@ -13,13 +13,13 @@ class Network:
     def __init__(self):
         self.inputNodes = []
         self.hiddenNodes = []
-        self.outputNodes = []
+        self.outputNodes = None
         
     def Evaluate(self, input):
-        output = []
-        for node in self.outputNodes:
-            output[node.index] = node.Evaluate(input)
-            
+        
+        output = self.outputNodes.Evaluate(input) 
+        return output
+
     def PropagateError(self, truth):
         for node in self.inputNodes:
             node.EvalError(truth)
@@ -30,9 +30,9 @@ class Network:
             
     def Train(self, trainSet, learnRate, maxIterations):
         while maxIterations > 0:
-            for ex in trainSet:
-                output = self.Evaluate(getData(ex))
-                self.PropagateError(getTruth(ex))
+            for ex,label in trainSet:
+                output = self.Evaluate(ex)
+                self.PropagateError(label)
                 self.UpdateWeights(learnRate)
                 maxIterations -= 1
     
