@@ -7,7 +7,7 @@ def getData(tup):
 
 def getTruth(tup):
     (genre, data) = tup
-    return genre
+    return data
 
 class Network:
     def __init__(self):

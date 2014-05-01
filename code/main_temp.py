@@ -1,5 +1,6 @@
 import network
 import node_edge
+import Data_Reader as reader
 
 def binaryNumbersTest():
     n_network = network.Network()
@@ -26,9 +27,23 @@ def binaryNumbersTest():
                       ((1,0,1), 0),
                       ((1,1,0), 1),
                       ((1,1,1), 0)]
-    n_network.Train(labeledExamples, 0.25, maxIterations=5000)
+    n_network.Train(labeledExamples, 0.1, maxIterations=5000)
 
-    print n_network.Evaluate ((0,0,0))
+    #comment these two parts out and uncomment the top to get it working
+    #data = reader.get_songs()
+
+    #def new_data (data):
+    #  tune_truth = []
+
+    #  for i in range(0,len(data)):
+    #      data[i] = (genre, tune_data)
+    #      usable = (tune_data, GetTruth(genre))
+    #      tune_truth.append(usable)
+
+    #  return tune_truth
+
+    n_network.Train(labeledExamples, 0.2, maxIterations=5000)
+
     # test for consistency
     for number, isEven in labeledExamples:
         print "Error for %r is %0.4f. Output was:%0.4f" % (number, isEven - n_network.Evaluate(number), n_network.Evaluate(number))

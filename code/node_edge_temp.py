@@ -1,8 +1,4 @@
 import random
-import math
-
-def activationFunction(x):
-   return 1.0 / (1.0 + math.exp(-x))
 
 class Node:
     def __init__(self):
@@ -11,30 +7,21 @@ class Node:
         self.LastInput = None
         self.LastOutputs = None
         self.Error = None
-        #self.addBias()
-
-    #def addBias(self):
-       #self.EdgesIn.append(Edge(BiasNode(),self))
-
+         
     def Evaluate(self, input):
-        #if self.LastOutputs is not None:
-        #    return self.LastOutputs
-        
-        self.LastInput = []
-        weightsum = 0
-        
+        sum = 0
+        print "test"
         # store the outputs of each edge in an array
         for i, e in enumerate(self.EdgesIn):
-            firstInput = e.inp.Evaluate(input) 
-            self.LastInput.append(firstInput)
-            weightsum += firstInput * e.weight
-            # print i, e
-
-        # sum the elements of the input array
-        self.LastOutputs = activationFunction(weightsum)
-        # store the value to be outputted in the output array
+            self.LastInput[i] = (e.inp.Evaluate(input) * e.weight)
+            print i, e
         
-        return self.LastOutputs
+        # sum the elements of the input array
+        output = sum(self.LastInput)
+        
+        # store the value to be outputted in the output array
+        self.LastOutputs.append(output)    
+        return sum
 
 #    def evaluate(self, inputVector):
 #        self.lastInput = []
@@ -49,67 +36,51 @@ class Node:
 #        return self.lastOutput
     
     def EvalError(self, truth):
-        
-        #if self.Error is not None:         
-        #    return self.Error
+        # if for some reason we haven't learned from our last error
+        if self.Error is None:
+            return self.Error
         
         # if current node is an output node calculate error and return it
-        if self.EdgesOut == []:
-            self.Error = truth - self.LastOutputs
-
+        else if self.EdgesOut == []:
+            self.Error = truth - self.LastOutputs[0]
             return self.Error
         
         # else sum errors of output edges and eventually return error
         else:
             for e in self.EdgesOut:
-                self.Error = 0
                 self.Error += (e.weight * e.out.EvalError(truth))
+                
             return self.Error
-
-
         
     def Learn(self, LearnRate):
-
-        #if self.LastOutputs is not None:
-        #    print "1"
-
-        #if self.Error is not None:
-        #    print "2"
-
-        #if self.LastInput is not None:
-        #    print "3"
-
-        for i, e in enumerate(self.EdgesIn):
-            e.weight += (LearnRate * self.LastOutputs * (1 - self.LastOutputs) * self.Error * self.LastInput[i])
-
-        for edge in self.EdgesOut:
-            edge.out.Learn(LearnRate)
-
-
+        if not(self.LastOutputs == [] or self.Error == None or self.LastInput == None):
+            for i, e in enumerate(self.EdgesIn):
+                e.weight += (LearnRate * self.LastOutputs[0] * (1 - self.LastOutputs[0]) * self.Error * self.LastInput[i])            
         
 class Output_Node(Node):
     def __init__(self, index):
-        Node.__init__(self)
+        Node()
         
         # add index of the output of this node for the creation of the single output vector
         self.index = index
         
     def EvalError(self, truth):
-        self.Error = truth[self.index] - self.LastOutputs
+        self.Error = truth[self.index] - self.LastOutputs[0]
         return self.Error
         
         
 class Input_Node(Node): 
     def __init__(self, index):
-        Node.__init__(self)
+        Node()
         
         # add index of the input to be assigned to this node
         self.index = index; 
         
-    def Evaluate(self, inputvector):
+    def Evaluate(self, input):
         # should just return the correct value identified by index from the input
-        self.LastOutput = inputvector[self.index]        
-        return self.LastOutput
+        output = input[self.index]
+        self.LastOutputs.append(output)
+        return output
 
 class Edge:
     def __init__(self, inp, out):
