@@ -54,17 +54,17 @@ class Node:
         #    return self.Error
         
         # if current node is an output node calculate error and return it
-        if self.EdgesOut == []:
-            self.Error = truth - self.LastOutputs
+        #if self.EdgesOut == []:
+        #    self.Error = truth - self.LastOutputs
 
-            return self.Error
+        #    return self.Error
         
         # else sum errors of output edges and eventually return error
-        else:
-            for e in self.EdgesOut:
-                self.Error = 0
-                self.Error += (e.weight * e.out.EvalError(truth))
-            return self.Error
+        #else:
+        for e in self.EdgesOut:
+            self.Error = 0
+            self.Error += (e.weight * e.out.EvalError(truth))
+        return self.Error
 
 
         

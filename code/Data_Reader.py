@@ -1,42 +1,29 @@
 import pyen
 import os
+import math
 
-SONGS_PER_GENRE = 3 # Up to 100 songs per genre. 100 songs per genre takes about 30 seconds so let it load.
+SONGS_PER_GENRE = 10 # Up to 100 songs per genre. 100 songs per genre takes about 30 seconds so let it load.
 
 os.environ["ECHO_NEST_API_KEY"] = "SRCGPBCAPG5FQQKFR"
 
 EchoNest = pyen.Pyen()
 
+def sigmoid(data, stretch=1, midpoint=0):
+    return 1 / (1 + math.exp(-1*stretch*(data-midpoint)))
+
 def normalize(song_data):
 
-    # Normalize time_signature and cast int to float
-    if song_data['time_signature'] > 7:
-        song_data['time_signature'] = 8.
-    elif song_data['time_signature'] < 1:
-        song_data['time_signature'] = 1.
-    else:
-        song_data['time_signature'] = float(song_data['time_signature'])
-
-    # Make mode a float
-    song_data['mode'] = float(song_data['mode'])
+    # Normalize time_signature
+    song_data['time_signature'] = sigmoid(song_data['time_signature'], midpoint = 4)
 
     # Normalize duration
-    if song_data['duration'] > 7000.:
-        song_data['duration'] = 7000.
-    elif song_data['duration'] < 1.:
-        song_data['duration'] = 1.
+    song_data['duration'] = sigmoid(song_data['duration'], midpoint = 255, stretch = .01)
 
     # Normalize loudness
-    if song_data['loudness'] > 5.:
-        song_data['loudness'] = 5.
-    elif song_data['loudness'] < -30.:
-        song_data['loudness'] = -30.
+    song_data['loudness'] = sigmoid(song_data['loudness'], midpoint = -8, stretch = -.1)
 
     # Normalize tempo
-    if song_data['tempo'] > 200.:
-        song_data['tempo'] = 200.
-    elif song_data['tempo'] < 0.:
-        song_data['tempo'] = 0.
+    song_data['tempo'] = sigmoid(song_data['tempo'], midpoint = 115, stretch = -.05)
 
 genres = ['blues', 'classical', 'electronic', 'hip hop', 'jazz', 'reggae', 'rock']
 
@@ -51,8 +38,8 @@ class Song:
         # convert the genre information into a vector of 0's, with a 1 in the position of the actual genre of the song
         for genre in genres:
             if genre == self.genre:
-                truth.append([1])
-            else: truth.append([0])
+                truth.append(1)
+            else: truth.append(0)
         
         # return the vector.
         return truth
@@ -79,7 +66,7 @@ def get_songs():
             normalize(tune_data)
 
             # construct the new songs from the ingredients we have
-            new_song = Song(genre, tune_data)
+            new_song = Song(genre, tune_data.values())
 
             # append it to our song list
             songs.append(new_song)
