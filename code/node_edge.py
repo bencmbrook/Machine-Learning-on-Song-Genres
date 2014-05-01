@@ -14,7 +14,7 @@ class Node:
         #self.addBias()
 
     #def addBias(self):
-       #self.EdgesIn.append(Edge(BiasNode(),self))
+    #   self.EdgesIn.append(Edge(BiasNode(),self))
 
     def Evaluate(self, input):
         #if self.LastOutputs is not None:
@@ -110,6 +110,7 @@ class Input_Node(Node):
         # should just return the correct value identified by index from the input
         self.LastOutput = inputvector[self.index]        
         return self.LastOutput
+
 
 class Edge:
     def __init__(self, inp, out):

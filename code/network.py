@@ -6,11 +6,11 @@ class Network:
     def __init__(self):
         self.inputNodes = []
         self.hiddenNodes = []
-        self.outputNodes = None
+        self.outputNodes = []
         
     def Evaluate(self, input):
-        
-        output = self.outputNodes.Evaluate(input) 
+        for i in range(0, len(outputNodes)):
+            output[i] = self.outputNodes[i].Evaluate(input) 
         return output
 
     def PropagateError(self, truth):
