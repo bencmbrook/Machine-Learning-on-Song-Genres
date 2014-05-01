@@ -45,12 +45,19 @@ def binaryNumbersTest():
         return tune_list
 
     trainer = new_data(data)
+     
+    n_network.Train(trainer, 0.1, maxIterations=100)
 
-    n_network.Train(trainer, 0.2, maxIterations=10)
-    
     # test for consistency
-    for i in range(0, len(trainer[1].tune_data)):
-        print "Output was:%0.4f" % n_network.Evaluate(trainer.tune_data[i])
+    print(trainer)
+
+    
+
+    for trainee in trainer: #range(0, len(data)):
+        inputs, genre = trainee
+        print inputs
+        print genre
+        print n_network.Evaluate(inputs) 
 
 
 
