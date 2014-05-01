@@ -1,6 +1,6 @@
 import network
 import node_edge
-import Data_Reader as reader
+from Data_Reader import *
 
 def binaryNumbersTest():
     n_network = network.Network()
@@ -19,30 +19,33 @@ def binaryNumbersTest():
     n_network.outputNodes = outputNode
     n_network.inputNodes.extend(inputNodes)
 
-    labeledExamples = [((0,0,0), 1),
-                      ((0,0,1), 0),
-                      ((0,1,0), 1),
-                      ((0,1,1), 0),
-                      ((1,0,0), 1),
-                      ((1,0,1), 0),
-                      ((1,1,0), 1),
-                      ((1,1,1), 0)]
-    n_network.Train(labeledExamples, 0.1, maxIterations=5000)
+    #labeledExamples = [((0,0,0), 1),
+    #                  ((0,0,1), 0),
+    #                  ((0,1,0), 1),
+    #                  ((0,1,1), 0),
+    #                  ((1,0,0), 1),
+    #                  ((1,0,1), 0),
+    #                  ((1,1,0), 1),
+    #                  ((1,1,1), 0)]
+    #n_network.Train(labeledExamples, 0.1, maxIterations=5000)
 
-    #comment these two parts out and uncomment the top to get it working
-    #data = reader.get_songs()
+    # comment these two parts out and uncomment the top to get it working
+    data = get_songs()
+    data_list = get_data(data)
+    truth_list = get_truth(data)
 
-    #def new_data (data):
-    #  tune_truth = []
+    def new_data (data):
+      tune_list = []
+      tune_data = get_data(data)
+      tune_truth = get_truth(data)
 
-    #  for i in range(0,len(data)):
-    #      data[i] = (genre, tune_data)
-    #      usable = (tune_data, GetTruth(genre))
-    #      tune_truth.append(usable)
+      for i in range(0,len(data)): 
+          usable = (tune_data[i], tune_truth[i])
+          tune_truth.append(usable)
 
-    #  return tune_truth
+      return tune_list
 
-    n_network.Train(labeledExamples, 0.2, maxIterations=5000)
+    n_network.Train(new_data(data), 0.2, maxIterations=5000)
 
     # test for consistency
     for number, isEven in labeledExamples:

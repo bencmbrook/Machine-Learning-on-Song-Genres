@@ -49,10 +49,10 @@ class Song:
         truth = []
         
         # convert the genre information into a vector of 0's, with a 1 in the position of the actual genre of the song
-        for i, genre in enumerate(genres):
+        for genre in genres:
             if genre == self.genre:
-                truth[i] = 1
-            else: truth[i] = 0
+                truth.append([1])
+            else: truth.append([0])
         
         # return the vector.
         return truth
@@ -85,3 +85,28 @@ def get_songs():
             songs.append(new_song)
 
     return songs
+
+
+def get_data(songs):
+    data_list = []
+
+    for i in range(0, len(songs)):
+        data = songs[i].getData()
+        data_list.append(data)
+
+    return data_list
+
+def get_truth(songs):
+    truth_list = []
+
+    for i in range(0, len(songs)):
+        truth = songs[i].getTruth()
+        truth_list.append(truth)
+
+    return truth_list
+
+
+
+
+
+

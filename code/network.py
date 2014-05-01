@@ -1,13 +1,6 @@
 # file containing the definition of network using classes in node_edge.py
 from node_edge import *
 
-def getData(tup):
-    (genre, data) = tup
-    return data
-
-def getTruth(tup):
-    (genre, data) = tup
-    return genre
 
 class Network:
     def __init__(self):
