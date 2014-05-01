@@ -45,21 +45,43 @@ def binaryNumbersTest():
         return tune_list
 
     trainer = new_data(data)
-     
+    
     n_network.Train(trainer, 0.1, maxIterations=100)
 
     # test for consistency
-    print(trainer)
 
     
+    return n_network
+  #for trainee in trainer: #range(0, len(data)):
+ #       inputs, genre = trainee
+  #      print inputs
+   #     print genre
+    #    print n_network.Evaluate(inputs) 
+
+def printer(net):
+
+    data = get_songs()
+
+    def new_data (data):
+        tune_list = []
+        tune_data = get_data(data)
+        tune_truth = get_truth(data)
+
+        for i in range(0,len(data)): 
+            usable = (tune_data[i], tune_truth[i])
+            tune_list.append(usable)
+
+        return tune_list
+
+    trainer = new_data(data)
 
     for trainee in trainer: #range(0, len(data)):
         inputs, genre = trainee
-        print inputs
-        print genre
-        print n_network.Evaluate(inputs) 
+        
+        #print genre
+        print net.Evaluate(inputs) 
+    
 
 
-
-
-binaryNumbersTest()
+netwerk = binaryNumbersTest()
+printer(netwerk)

@@ -10,8 +10,10 @@ class Network:
         
     def Evaluate(self, input):
         out = []
+        #print input
         for output in self.outputNodes:
             out.append(output.Evaluate(input)) 
+        #print out     
         return out
 
     def PropagateError(self, truth):
@@ -24,7 +26,7 @@ class Network:
             
     def Train(self, trainSet, learnRate, maxIterations):
         while maxIterations > 0:
-            print "train"
+            #print "train"
             for ex,label in trainSet:
                 output = self.Evaluate(ex)
                 self.PropagateError(label)

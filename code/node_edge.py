@@ -11,10 +11,10 @@ class Node:
         self.LastInput = None
         self.LastOutputs = None
         self.Error = None
-        #self.addBias()
+        self.addBias()
 
-    #def addBias(self):
-    #   self.EdgesIn.append(Edge(BiasNode(),self))
+    def addBias(self):
+      self.EdgesIn.append(Edge(BiasNode(),self))
 
     def Evaluate(self, input):
         #if self.LastOutputs is not None:
@@ -24,7 +24,7 @@ class Node:
         weightsum = 0
         
         # store the outputs of each edge in an array
-        for i, e in enumerate(self.EdgesIn):
+        for  e in self.EdgesIn:
             firstInput = e.inp.Evaluate(input) 
             self.LastInput.append(firstInput)
             weightsum += firstInput * e.weight
@@ -32,6 +32,7 @@ class Node:
 
         # sum the elements of the input array
         self.LastOutputs = activationFunction(weightsum)
+        #self.LastOutputs = #activationFunction(weightsum)
         # store the value to be outputted in the output array
         
         return self.LastOutputs
@@ -81,7 +82,7 @@ class Node:
 
         for i, e in enumerate(self.EdgesIn):
             e.weight += (LearnRate * self.LastOutputs * (1 - self.LastOutputs) * self.Error * self.LastInput[i])
-
+            print e.weight
         for edge in self.EdgesOut:
             edge.out.Learn(LearnRate)
 
@@ -111,6 +112,9 @@ class Input_Node(Node):
         self.LastOutput = inputvector[self.index]        
         return self.LastOutput
 
+    def addBias(self):
+      pass
+
 
 class Edge:
     def __init__(self, inp, out):
@@ -126,7 +130,7 @@ class BiasNode(Input_Node):
     def __init__(self):
         Node.__init__(self)
  
-    def evaluate(self, inputVector):
+    def Evaluate(self, inputVector):
         return 1.0
 
 class NeuralNetwork:
