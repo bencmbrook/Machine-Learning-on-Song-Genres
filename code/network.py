@@ -12,8 +12,7 @@ class Network:
         out = []
         #print input
         for output in self.outputNodes:
-            out.append(output.Evaluate(input)) 
-        print out     
+            out.append(output.Evaluate(input))    
         return out
 
     def PropagateError(self, truth):

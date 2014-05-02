@@ -6,7 +6,7 @@ from random import shuffle
 def binaryNumbersTest():
     n_network = network.Network()
     inputNodes = [node_edge.Input_Node(i) for i in range(10)]
-    hiddenNodes = [node_edge.Node() for i in range(8)]
+    hiddenNodes = [node_edge.Node() for i in range(20)]
     outputNodes = [node_edge.Output_Node(i) for i in range(7)]
 
     # weights are all randomized
@@ -49,12 +49,13 @@ def binaryNumbersTest():
     
     shuffle(trainer)
 
+    for train in trainer:
+        print train
+
     #print trainer
-    n_network.Train(trainer, .001, maxIterations=200)
+    n_network.Train(trainer, .03, maxIterations=5000)
 
     # test for consistency
-
-    
     return n_network
   #for trainee in trainer: #range(0, len(data)):
  #       inputs, genre = trainee
@@ -78,13 +79,27 @@ def printer(net):
         return tune_list
 
     trainer = new_data(data)
-    print trainer
-    print len(trainer)
+    #for train in trainer:
+        #print train
+    #print len(trainer)
+    total = 0
+    correct = 0
     for trainee in trainer: #range(0, len(data)):
+        total += 1
         inputs, genre = trainee
         
         #print genre
-        print net.Evaluate(inputs) 
+        guess = net.Evaluate(inputs)
+        for i in range(0, len(genre)):
+            if max(genre) == (genre[i]):
+                print guess[i]
+                if max(guess) == guess[i]: 
+                    correct += 1
+    print correct
+    print total     
+
+
+
     
 
 
