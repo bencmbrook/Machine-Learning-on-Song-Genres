@@ -3,10 +3,10 @@ import node_edge
 from Data_Reader import *
 from random import shuffle
 
-def binaryNumbersTest():
+def binaryNumbersTest(hid, learnrate, iterations):
     n_network = network.Network()
     inputNodes = [node_edge.Input_Node(i) for i in range(10)]
-    hiddenNodes = [node_edge.Node() for i in range(20)]
+    hiddenNodes = [node_edge.Node() for i in range(0, hid)]
     outputNodes = [node_edge.Output_Node(i) for i in range(7)]
 
     # weights are all randomized
@@ -49,11 +49,11 @@ def binaryNumbersTest():
     
     shuffle(trainer)
 
-    for train in trainer:
-        print train
+    #for train in trainer:
+    #    print train
 
     #print trainer
-    n_network.Train(trainer, .03, maxIterations=5000)
+    n_network.Train(trainer, learnrate, maxIterations=iterations)
 
     # test for consistency
     return n_network
@@ -102,8 +102,9 @@ def printer(net):
 
     
 
-
-netwerk = binaryNumbersTest()
+#for i in range(1, 25):
+netwerk = binaryNumbersTest(10, 0.01, 10000)
+ #   print i
 printer(netwerk)
 
 

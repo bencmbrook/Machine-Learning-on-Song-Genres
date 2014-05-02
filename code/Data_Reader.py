@@ -9,7 +9,7 @@ os.environ["ECHO_NEST_API_KEY"] = "SRCGPBCAPG5FQQKFR"
 
 EchoNest = pyen.Pyen()
 
-def sigmoid(data, stretch=1, midpoint=0):
+def sigmoid(data, midpoint, stretch = 1):
     return 1 / (1 + math.exp(-1*stretch*(data-midpoint)))
 
 def normalize(song_data):
@@ -18,14 +18,17 @@ def normalize(song_data):
     song_data['time_signature'] = song_data['time_signature']/7
 
     # Normalize duration
-    song_data['duration'] = sigmoid(song_data['duration'])
+    #song_data['duration'] = sigmoid(song_data['duration'], 350)
+    if song_data['duration'] > 600:
+        song_data['duration'] = 1
+    else: song_data['duration'] = song_data['duration'] / 600
 
     # Normalize loudness
-    song_data['loudness'] = sigmoid(song_data['loudness'])
+    song_data['loudness'] = sigmoid(song_data['loudness'], -10)
 
     # Normalize tempo
-    song_data['tempo'] = sigmoid(song_data['tempo'])
-
+    #song_data['tempo'] = sigmoid(song_data['tempo'], 100)
+    song_data['tempo'] = song_data['tempo']/200
     
 genres = ['blues', 'classical', 'electronic', 'hip hop', 'jazz', 'reggae', 'rock']
 
