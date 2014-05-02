@@ -90,9 +90,10 @@ def printer(net):
         
         #print genre
         guess = net.Evaluate(inputs)
+        
         for i in range(0, len(genre)):
             if max(genre) == (genre[i]):
-                print guess[i]
+                print guess
                 if max(guess) == guess[i]: 
                     correct += 1
     print correct
@@ -103,7 +104,7 @@ def printer(net):
     
 
 #for i in range(1, 25):
-netwerk = binaryNumbersTest(10, 0.01, 10000)
+netwerk = binaryNumbersTest(10, 0.005, 20000)
  #   print i
 printer(netwerk)
 
