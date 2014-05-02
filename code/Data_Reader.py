@@ -1,6 +1,7 @@
 import pyen
 import os
 import math
+import random
 
 SONGS_PER_GENRE = 10 # Up to 100 songs per genre. 100 songs per genre takes about 30 seconds so let it load.
 
@@ -14,17 +15,18 @@ def sigmoid(data, stretch=1, midpoint=0):
 def normalize(song_data):
 
     # Normalize time_signature
-    song_data['time_signature'] = sigmoid(song_data['time_signature'], midpoint = 4)
+    song_data['time_signature'] = song_data['time_signature']/7
 
     # Normalize duration
-    song_data['duration'] = sigmoid(song_data['duration'], midpoint = 255, stretch = .01)
+    song_data['duration'] = sigmoid(song_data['duration'])
 
     # Normalize loudness
-    song_data['loudness'] = sigmoid(song_data['loudness'], midpoint = -8, stretch = -.1)
+    song_data['loudness'] = sigmoid(song_data['loudness'])
 
     # Normalize tempo
-    song_data['tempo'] = sigmoid(song_data['tempo'], midpoint = 115, stretch = -.05)
+    song_data['tempo'] = sigmoid(song_data['tempo'])
 
+    
 genres = ['blues', 'classical', 'electronic', 'hip hop', 'jazz', 'reggae', 'rock']
 
 class Song:
@@ -32,7 +34,7 @@ class Song:
         self.data = data
         self.genre = genre
         
-    def getTruth(self):
+    def GetTruth(self):
         truth = []
         
         # convert the genre information into a vector of 0's, with a 1 in the position of the actual genre of the song
@@ -44,7 +46,7 @@ class Song:
         # return the vector.
         return truth
     
-    def getData(self):
+    def GetData(self):
         return self.data
     
 def get_songs():
@@ -74,11 +76,12 @@ def get_songs():
     return songs
 
 
+
 def get_data(songs):
     data_list = []
 
     for i in range(0, len(songs)):
-        data = songs[i].getData()
+        data = songs[i].GetData()
         data_list.append(data)
 
     return data_list
@@ -87,13 +90,13 @@ def get_truth(songs):
     truth_list = []
 
     for i in range(0, len(songs)):
-        truth = songs[i].getTruth()
+        truth = songs[i].GetTruth()
         truth_list.append(truth)
 
     return truth_list
 
 
 
-
+print(len(get_songs()))
 
 

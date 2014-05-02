@@ -1,6 +1,7 @@
 import network
 import node_edge
 from Data_Reader import *
+from random import shuffle
 
 def binaryNumbersTest():
     n_network = network.Network()
@@ -46,7 +47,10 @@ def binaryNumbersTest():
 
     trainer = new_data(data)
     
-    n_network.Train(trainer, 0.1, maxIterations=100)
+    shuffle(trainer)
+
+    #print trainer
+    n_network.Train(trainer, .001, maxIterations=200)
 
     # test for consistency
 
@@ -74,7 +78,8 @@ def printer(net):
         return tune_list
 
     trainer = new_data(data)
-
+    print trainer
+    print len(trainer)
     for trainee in trainer: #range(0, len(data)):
         inputs, genre = trainee
         
@@ -85,3 +90,13 @@ def printer(net):
 
 netwerk = binaryNumbersTest()
 printer(netwerk)
+
+
+# x = [[i] for i in range(0, len(trainer))]
+ #   shuffle(x)
+#
+ #   for i in range(0, len(trainer)):
+  #      a = x[i]
+   #     train.append(trainer[a])
+#
+ #   print train

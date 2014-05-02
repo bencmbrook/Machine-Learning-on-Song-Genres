@@ -82,7 +82,7 @@ class Node:
 
         for i, e in enumerate(self.EdgesIn):
             e.weight += (LearnRate * self.LastOutputs * (1 - self.LastOutputs) * self.Error * self.LastInput[i])
-            print e.weight
+            #print e.weight
         for edge in self.EdgesOut:
             edge.out.Learn(LearnRate)
 

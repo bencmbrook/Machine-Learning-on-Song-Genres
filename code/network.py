@@ -13,7 +13,7 @@ class Network:
         #print input
         for output in self.outputNodes:
             out.append(output.Evaluate(input)) 
-        #print out     
+        print out     
         return out
 
     def PropagateError(self, truth):
@@ -32,6 +32,8 @@ class Network:
                 self.PropagateError(label)
                 self.UpdateWeights(learnRate)
                 maxIterations -= 1
+                #print label
+
     
     # adds an edge
     def AddEdge(self, origin, terminal):
